@@ -6,7 +6,7 @@ class LexError(Exception):
         super().__init__(message)
         self.pos = pos
         self.message = message
-#Une exception personnalisée pour les erreurs lexicales. Elle garde la position et le message
+#Une exception personnalisée pour les erreurs lexicales. Elle garde la position et le message(pour le mode panique quest bonus)
 
 OPERATORS = set("|*+?()@") #les operateurs
 
@@ -20,5 +20,6 @@ def tokenize(text):
             tokens.append(token("SYMBOLE", c, i))
         else:
             raise LexError(i, f"Erreur à la position {i} : caractère invalide {c!r}")
-    tokens.append(token("EOF", "", len(text) + 1))#jeton EOF
+    tokens.append(token("EOF", "", len(text) + 1)) #jeton EOF
     return tokens
+
