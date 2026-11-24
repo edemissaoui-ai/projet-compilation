@@ -15,3 +15,4 @@ class Parser:
         self.tokens = tokens   # liste des jetons par l'anlyseur lexicale
         self.i = 0             # indice du jeton courant
         self.expected = set()  # jetons testee à la position courante
+

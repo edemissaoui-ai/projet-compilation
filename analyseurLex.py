@@ -28,7 +28,6 @@ def tokenize(text):
         return self.tokens[self.i]
 
     def test(self, *kinds):
-        """Teste le lookahead et mémorise ce qui était attendu."""
         self.expected.update(kinds)
         return self.cur.kind in kinds
 
