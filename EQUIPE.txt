@@ -1,0 +1,25 @@
+TP Techniques de compilation - Du texte d'une expression régulière à l'automate
+Année universitaire 2026-2027
+
+1. ISSAOUI Edem
+   Étudiant 1 - Parties en charge : analyse lexicale (analyseurLex.py),
+   partie 1 (grammaire LL(1), PREMIER/SUIVANT, table d'analyse),
+   partie 2 (analyseur prédictif, messages d'erreur).
+   Parties relues : partie 4, jeu de tests, rapport.
+
+2. BEN TAHER Houssem
+   Étudiant 2 - Parties en charge : partie 3 (schéma de traduction,
+   constructions de Thompson, automate.py, actions sémantiques).
+   Parties relues : parties 1 et 2 (analyseurLex.py).
+
+3. JAZIRI Yahia
+   Étudiant 3 - Parties en charge : partie 5 (export Graphviz,
+   simulation, interface en ligne de commande : graphviz_export.py,
+   simulation.py, programme.py).
+   Parties relues : partie 3 (automate.py).
+
+4. MTAWA Bara
+   Étudiant 4 - Parties en charge : partie 4 (numérotation des états),
+   partie 6 (jeu de tests : tests.txt, run_tests.py), rapport,
+   correction des opérateurs + et ? dans automate.py.
+   Parties relues : partie 5.
