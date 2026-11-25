@@ -84,7 +84,7 @@ correspondent à des erreurs syntaxiques.
 | `T` | `F T'` | `F T'` | `F T'` |  |  |  |  |  |  |
 | `T'` | `F T'` | `F T'` | `F T'` | `ε` |  |  |  | `ε` | `ε` |
 | `F` | `A F'` | `A F'` | `A F'` |  |  |  |  |  |  |
-| `F'` |  | `ε` | `ε` | `ε` | `'*' F'` | `'+' F'` | `'?' F'` | `ε` |  |
+| `F'` | `ε` | `ε` | `ε` | `ε` | `'*' F'` | `'+' F'` | `'?' F'` | `ε` | `ε` |
 | `A` | `'(' R ')'` | `SYMBOLE` | `'@'` |  |  |  |  |  |  |
 
 #### 4.1. Preuve de l'absence de conflit
@@ -150,6 +150,10 @@ un facteur : il signale la fin de la concaténation en cours.
 
 ### 7. Détection des erreurs
 
+Les positions sont 0-based : la position d'un jeton est l'indice de son
+premier caractère dans la chaîne (le marqueur de fin est à `len(texte)`),
+comme dans l'exemple du sujet.
+
 #### 7.1. Cas de `a)`
 
 L'analyse de `a` réussit. Sur `)`, `F'`, `T'` et `R'` choisissent `ε`, car `)`
@@ -161,15 +165,15 @@ de fin d'entrée : on attend `$` et on trouve `)`.
 
 `R'` lit le premier `|` (case `M[R', |]`) puis appelle `T` avec le second `|`
 comme jeton courant. La case `M[T, |]` est vide : l'erreur est détectée à la
-position 3, avec `(`, `SYMBOLE` ou `@` attendus.
+position 2, avec `(`, `SYMBOLE` ou `@` attendus.
 
 #### 7.3. Synthèse
 
 | Entrée | Où est l'erreur détectée | Jetons attendus |
 |---|---|---|
-| `a)` | Test de fin d'entrée après `R` | fin de l'expression, `\|`, `*`, `+`, `?`, `(`, `SYMBOLE`, `@` |
+| `a)` | Test de fin d'entrée après `R` | fin de l'expression |
 | `a||b` | Case vide `M[T, \|]` | `(`, `SYMBOLE`, `@` |
-| `(ab` | Attente de `)` dans `A` | `)` (et les continuations possibles) |
+| `(ab` | Attente de `)` dans `A` | `)` |
 | `*a`, `\|a` | Case vide `M[R, *]` ou `M[R, \|]` | `(`, `SYMBOLE`, `@` |
 | `()` | Case vide `M[R, )]` (appel de `R` depuis `A`) | `(`, `SYMBOLE`, `@` |
 | `a(` | Case vide `M[A, $]` | `(`, `SYMBOLE`, `@` |
