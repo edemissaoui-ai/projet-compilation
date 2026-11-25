@@ -1,0 +1,19 @@
+digraph AFN {
+    rankdir=LR;
+    node [shape=circle];
+    "__debut" [shape=point];
+    "__debut" -> "4";
+    "5" [shape=doublecircle];
+    "0";
+    "1";
+    "2";
+    "3";
+    "4";
+    "5";
+    "0" -> "1" [label="a"];
+    "1" -> "2" [label="ε"];
+    "2" -> "3" [label="b"];
+    "3" -> "0" [label="ε"];
+    "3" -> "5" [label="ε"];
+    "4" -> "0" [label="ε"];
+}
