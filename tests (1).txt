@@ -1,0 +1,57 @@
+# Jeu de tests du traducteur expression régulière -> AFN (Thompson)
+#
+# Format d'une expression valide (format de l'énoncé) :
+#     expression ; mots acceptés ; mots rejetés
+# Les mots sont séparés par des espaces ; @ désigne le mot vide.
+#
+# Format d'un test d'erreur :
+#     expression ; ERREUR ; position attendue (0 = premier caractère)
+#
+# Les lignes vides et celles qui commencent par # sont ignorées.
+# Pour chaque expression valide, run_tests.py vérifie aussi la propriété
+# « au plus 2n états » (et la numérotation 0 .. 2n-1).
+
+# --- Expressions imposées par l'énoncé ---
+a ; a ; b aa @
+a|b ; a b ; ab @
+ab* ; a abbb ; b aba @
+(a|b)*abb ; abb aabb babb ; ab abba @
+(ab)+ ; ab abab ; aba @ b
+a?b ; b ab ; a aab @
+(a*)* ; a aaa @ ; b ab
+a(b|c)*d ; ad abcbd ; a abc @
+@ ; @ ; a
+
+# --- Expressions de notre invention (justifiées dans le rapport) ---
+# 1. + à l'intérieur de ? : invariant des fragments de + et ? (révèle le défaut corrigé)
+(ab+)? ; @ ab abbb ; b bb a abab
+# 2. postfixés enchaînés : a*+? est syntaxiquement valide et équivaut à a*
+a*+? ; @ a aaaa ; b ab
+# 3. imbrication profonde d'étoiles : cycles d'ε emboîtés, terminaison de l'ε-fermeture
+((a*)*)* ; @ a aaaa ; b ab
+
+# --- Tests complémentaires ---
+# priorités : | < concaténation < postfixés
+a|bc* ; a b bc bccc ; ac abc bcb @
+# + puis ? : symétrique de (ab+)?
+(a+b)? ; @ ab aab ; a aa b ba
+# associativité de | et absence de branche fantôme
+a|b|c ; a b c ; ab @ abc
+# alphabet complet (majuscules, chiffres) et @ dans une concaténation
+Z9|@x ; Z9 x ; Z 9 Zx @
+# ? sur deux facteurs : quatre combinaisons, ordre imposé
+(a|@)(b|@) ; @ a b ab ; ba aa
+# étoile dans un + : répétitions imbriquées
+((ab)*c)+ ; c abc cabc ababcc ; @ ab abca
+
+# --- Tests d'erreur ---
+(ab ; ERREUR ; 3
+ab) ; ERREUR ; 2
+*a ; ERREUR ; 0
+a||b ; ERREUR ; 2
+() ; ERREUR ; 1
+|a ; ERREUR ; 0
+a( ; ERREUR ; 2
+a| ; ERREUR ; 2
+a-b ; ERREUR ; 1
+(a|b))* ; ERREUR ; 5
